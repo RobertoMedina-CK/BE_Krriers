@@ -7,10 +7,12 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "rudy",
-    password: "123456",
-    database:"krriers"
+    host: "riderarmour-do-user-17269276-0.e.db.ondigitalocean.com",
+    user: "doadmin",
+    password: "AVNS_BlosgjkTIrb16Qnd1lh",
+    database:"krriers",
+    port:25060,
+    ssl:{rejectUnauthorized:false}    
 
 });
 db.connect((err)=>{
