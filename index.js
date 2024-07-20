@@ -102,10 +102,11 @@ app.post("/transportistas", (req,res)=>{
     const telefono = req.body.telefono;
     const nombre = req.body.nombre;
     const dot = req.body.dot;
+    const margen = req.body.margen;
     
        
     
-    db.query('INSERT INTO transportistas(telefono,nombre,dot) VALUES (?,?,?)', [telefono,nombre,dot],
+    db.query('INSERT INTO transportistas(telefono,nombre,dot,margen) VALUES (?,?,?,?)', [telefono,nombre,dot,margen],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -117,10 +118,10 @@ app.post("/transportistas", (req,res)=>{
 });
 
 app.get("/autos", (req,res)=>{
-    db.query('SELECT marca,modelo,anio,fee FROM autos', 
+    db.query('SELECT * FROM autos', 
                 (err,result)=>{
             if(err){
-                console.log(err);
+                console.log(err);9
              } else {
                 res.send(result);
              }
@@ -226,11 +227,15 @@ app.put("/llegada", (req,res)=>{
     const direccion = req.body.direccion;   
     const fecha = req.body.fecha;   
     const precio = req.body.precio;     
-    const fechafinal = req.body.fechafinal;    
-
+    const fechafinal = req.body.fechafinal; 
+    const deposito = req.body.deposito;
+    const fechallegada = req.body.fechallegada;
+    const feescarrier = req.body.feescarrier;
+    const fechaasignacarrier = req.body.fechaasignacarrier;
+    const nombrecarrier = req.body.nombrecarrier;
         
     
-    db.query('UPDATE pedidos SET fees=?,titulo=?,notas=? WHERE id=?',[fees,titulo,notas,id],
+    db.query('UPDATE pedidos SET fees=?,titulo=?,notas=?,feescarrier=?,fechallegada=? WHERE id=?',[fees,titulo,notas,feescarrier,fechallegada,id],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -305,8 +310,9 @@ app.put("/transportistas", (req,res)=>{
     const telefono = req.body.telefono;
     const nombre = req.body.nombre;
     const dot = req.body.dot;
+    const margen = req.body.margen;
         
-    db.query('UPDATE transportistas SET telefono=?,nombre=?,dot=? WHERE id=?',[telefono,nombre,dot,id],
+    db.query('UPDATE transportistas SET telefono=?,nombre=?,dot=?,margen=? WHERE id=?',[telefono,nombre,dot,margen,id],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -400,5 +406,5 @@ app.delete("/transportistas/:id", (req,res)=>{
 });
 
 app.listen(3001,()=> {
-    console.log("Corriendo en el puerto 3001")
+    console.log("Corriendo Digital Ocean")
 })
