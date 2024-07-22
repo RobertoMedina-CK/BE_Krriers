@@ -6,15 +6,18 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-    host: "riderarmour-do-user-17269276-0.e.db.ondigitalocean.com",
-    user: "doadmin",
-    password: "AVNS_BlosgjkTIrb16Qnd1lh",
-    database:"krriers",
-    port:25060,
-    ssl:{rejectUnauthorized:false}    
-
+  const db = mysql.createConnection({
+  host: "riderarmour-do-user-17269276-0.e.db.ondigitalocean.com",
+  user: "doadmin",
+  password: "AVNS_BlosgjkTIrb16Qnd1lh",
+  database: "krriers",
+  port: 25060,
+  ssl: { rejectUnauthorized: false },
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 10000,
+      
 });
+
 db.connect((err)=>{
    if (err) {console.error("Error de Conexion", err); return}
    console.log("Conectado a la base de datos");
