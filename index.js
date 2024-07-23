@@ -129,6 +129,18 @@ app.get("/autos", (req,res)=>{
     );
 });
 
+app.get("/asigna", (req,res)=>{
+    db.query('SELECT * FROM pedidos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
 app.get("/clientes", (req,res)=>{
     db.query('SELECT * FROM clientes', 
                 (err,result)=>{
@@ -234,7 +246,6 @@ app.put("/llegada", (req,res)=>{
     const fechaasignacarrier = req.body.fechaasignacarrier;
     const nombrecarrier = req.body.nombrecarrier;
         
-    
     db.query('UPDATE pedidos SET fees=?,titulo=?,notas=?,feescarrier=?,fechallegada=? WHERE id=?',[fees,titulo,notas,feescarrier,fechallegada,id],
         (err,result)=>{
             if(err){
@@ -245,6 +256,42 @@ app.put("/llegada", (req,res)=>{
         }
     );
 });
+
+app.put("/asigna", (req,res)=>{
+    const id = req.body.id;
+    const lot = req.body.lot;
+    const fees = req.body.fees;
+    const notas = req.body.notas;
+    const titulo = req.body.titulo;
+    const telefono = req.body.telefono;
+    const nombre = req.body.nombre;
+    const buyer = req.body.buyer;
+    const pin = req.body.pin;
+    const marca = req.body.marca;   
+    const modelo = req.body.modelo;   
+    const anio = req.body.anio;   
+    const subasta = req.body.subasta;   
+    const direccion = req.body.direccion;   
+    const fecha = req.body.fecha;   
+    const precio = req.body.precio;     
+    const fechafinal = req.body.fechafinal; 
+    const deposito = req.body.deposito;
+    const fechallegada = req.body.fechallegada;
+    const feescarrier = req.body.feescarrier;
+    const fechaasignacarrier = req.body.fechaasignacarrier;
+    const nombrecarrier = req.body.nombrecarrier;
+        
+    db.query('UPDATE pedidos SET fechaasignacarrier=? WHERE id=?',[fechaasignacarrier,id],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
 
 
 app.put("/clientes", (req,res)=>{
