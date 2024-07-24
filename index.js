@@ -202,6 +202,18 @@ app.get("/transportistas", (req,res)=>{
     );
 });
 
+app.get("/pedidos", (req,res)=>{
+    db.query('SELECT * FROM pedidos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
 
 app.put("/autos", (req,res)=>{
     const id = req.body.id;
