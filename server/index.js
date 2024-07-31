@@ -6,18 +6,15 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-  const db = mysql.createConnection({
-  host: "riderarmour-do-user-17269276-0.e.db.ondigitalocean.com",
-  user: "doadmin",
-  password: "AVNS_BlosgjkTIrb16Qnd1lh",
-  database: "krriers",
-  port: 25060,
-  ssl: { rejectUnauthorized: false },
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 10000,
-      
-});
+const db = mysql.createConnection({
+    host: "riderarmour-do-user-17269276-0.e.db.ondigitalocean.com",
+    user: "doadmin",
+    password: "AVNS_BlosgjkTIrb16Qnd1lh",
+    database:"krriers",
+    port:25060,
+    ssl:{rejectUnauthorized:false}    
 
+});
 db.connect((err)=>{
    if (err) {console.error("Error de Conexion", err); return}
    console.log("Conectado a la base de datos");
@@ -32,10 +29,11 @@ app.post("/autos", (req,res)=>{
     const modelo = req.body.modelo;
     const anio = req.body.anio;
     const fee = req.body.fee;
+    const tipo = req.body.tipo;
     
     
     
-    db.query('INSERT INTO autos(marca,modelo,anio,fee) VALUES (?,?,?,?)', [marca,modelo,anio,fee],
+    db.query('INSERT INTO autos(marca,modelo,anio,fee,tipo) VALUES (?,?,?,?,?)', [marca,modelo,anio,fee,tipo],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -136,7 +134,7 @@ app.get("/asigna", (req,res)=>{
     db.query('SELECT * FROM pedidos', 
                 (err,result)=>{
             if(err){
-                console.log(err);9
+                console.log(err);
              } else {
                 res.send(result);
              }
@@ -205,6 +203,18 @@ app.get("/transportistas", (req,res)=>{
     );
 });
 
+app.get("/pedidos", (req,res)=>{
+    db.query('SELECT * FROM pedidos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
 
 app.put("/autos", (req,res)=>{
     const id = req.body.id;
@@ -212,9 +222,10 @@ app.put("/autos", (req,res)=>{
     const modelo = req.body.modelo;
     const anio = req.body.anio
     const fee = req.body.fee;
+    const tipo = req.body.tipo;
         
     
-    db.query('UPDATE autos SET marca=?,modelo=?,anio=?,fee=? WHERE id=?',[marca,modelo,anio,fee,id],
+    db.query('UPDATE autos SET marca=?,modelo=?,anio=?,fee=?,tipo=? WHERE id=?',[marca,modelo,anio,fee,tipo,id],
         (err,result)=>{
             if(err){
                 console.log(err);
