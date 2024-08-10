@@ -118,6 +118,45 @@ app.post("/transportistas", (req,res)=>{
     );
 });
 
+app.post("/pedidosabc", (req,res)=>{
+    const id = req.body.id;
+    const lot = req.body.lot;
+    const fees = req.body.fees;
+    const notas = req.body.notas;
+    const titulo = req.body.titulo;
+    const telefono = req.body.telefono;
+    const nombre = req.body.nombre;
+    const buyer = req.body.buyer;
+    const pin = req.body.pin;
+    const marca = req.body.marca;   
+    const modelo = req.body.modelo;   
+    const anio = req.body.anio;   
+    const subasta = req.body.subasta;   
+    const direccion = req.body.direccion;   
+    const fecha = req.body.fecha;   
+    const precio = req.body.precio;     
+    const fechafinal = req.body.fechafinal; 
+    const deposito = req.body.deposito;
+    const fechallegada = req.body.fechallegada;
+    const feescarrier = req.body.feescarrier;
+    const fechaasignacarrier = req.body.fechaasignacarrier;
+    const nombrecarrier = req.body.nombrecarrier;
+    const preciofinal = req.body.preciofinal;
+    const storage = req.body.storage;
+    
+       
+    
+    db.query('INSERT INTO pedidos(lot,nombre,telefono,buyer,pin,anio,marca,modelo,subasta,fecha,direccion) VALUES (?,?,?,?,?,?,?,?,?,?,?)', [lot,nombre,telefono,buyer,pin,anio,marca,modelo,subasta,fecha,direccion],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
 app.get("/autos", (req,res)=>{
     db.query('SELECT * FROM autos', 
                 (err,result)=>{
@@ -130,8 +169,57 @@ app.get("/autos", (req,res)=>{
     );
 });
 
+
+
+app.get("/anioautos", (req,res)=>{
+    db.query('SELECT DISTINCT anio FROM autos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);9
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+app.get("/marcaautos", (req,res)=>{
+    db.query('SELECT DISTINCT marca FROM autos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);9
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+// app.get("/modeloautos/:marca", (req,res)=>{
+//     db.query('SELECT DISTINCT modelo FROM autos WHERE marca=?',marca, 
+//                 (err,result)=>{
+//             if(err){
+//                 console.log(err);9
+//              } else {
+//                 res.send(result);
+//              }
+//         }
+//     );
+// });
+
 app.get("/asigna", (req,res)=>{
-    db.query('SELECT * FROM pedidos', 
+    db.query('SELECT * FROM pedidos WHERE nombrecarrier IS NULL', 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+app.get("/asignacompletado", (req,res)=>{
+    db.query('SELECT * FROM pedidos WHERE nombrecarrier IS NOT NULL', 
                 (err,result)=>{
             if(err){
                 console.log(err);
@@ -156,7 +244,32 @@ app.get("/clientes", (req,res)=>{
 
 
 app.get("/llegada", (req,res)=>{
-    db.query('SELECT * FROM pedidos', 
+    db.query(`SELECT * FROM pedidos WHERE fechafinal IS NULL or fechafinal = ''`, 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+app.get("/caja", (req,res)=>{
+    db.query(`SELECT * FROM pedidos WHERE fechafinal IS NULL or fechafinal=''`, 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+
+app.get("/reppedsinasignar", (req,res)=>{
+    db.query(`SELECT * FROM pedidos WHERE fechaasignacarrier IS NULL`, 
                 (err,result)=>{
             if(err){
                 console.log(err);
@@ -215,6 +328,57 @@ app.get("/pedidos", (req,res)=>{
     );
 });
 
+app.get("/pedidosabc", (req,res)=>{
+    db.query('SELECT * FROM pedidos', 
+                (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+app.put("/pedidosabc", (req,res)=>{
+    const id = req.body.id;
+    const lot = req.body.lot;
+    const fees = req.body.fees;
+    const notas = req.body.notas;
+    const titulo = req.body.titulo;
+    const telefono = req.body.telefono;
+    const nombre = req.body.nombre;
+    const buyer = req.body.buyer;
+    const pin = req.body.pin;
+    const marca = req.body.marca;   
+    const modelo = req.body.modelo;   
+    const anio = req.body.anio;   
+    const subasta = req.body.subasta;   
+    const direccion = req.body.direccion;   
+    const fecha = req.body.fecha;   
+    const precio = req.body.precio;     
+    const fechafinal = req.body.fechafinal; 
+    const deposito = req.body.deposito;
+    const fechallegada = req.body.fechallegada;
+    const feescarrier = req.body.feescarrier;
+    const fechaasignacarrier = req.body.fechaasignacarrier;
+    const nombrecarrier = req.body.nombrecarrier;
+    const preciofinal = req.body.preciofinal;
+    const storage = req.body.storage;
+    
+            
+    db.query('UPDATE pedidos SET lot=?,nombre=?,telefono=?,buyer=?,pin=?,anio=?,marca=?,modelo=?,subasta=?,fecha=?,direccion=? WHERE id=?',[lot,nombre,telefono,buyer,pin,anio,marca,modelo,subasta,fecha,direccion,id],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+
 
 app.put("/autos", (req,res)=>{
     const id = req.body.id;
@@ -271,7 +435,8 @@ app.put("/llegada", (req,res)=>{
     );
 });
 
-app.put("/asigna", (req,res)=>{
+
+app.put("/caja", (req,res)=>{
     const id = req.body.id;
     const lot = req.body.lot;
     const fees = req.body.fees;
@@ -294,8 +459,13 @@ app.put("/asigna", (req,res)=>{
     const feescarrier = req.body.feescarrier;
     const fechaasignacarrier = req.body.fechaasignacarrier;
     const nombrecarrier = req.body.nombrecarrier;
+    const preciofinal = req.body.preciofinal;
+    const storage = req.body.storage;
+    
+    
+
         
-    db.query('UPDATE pedidos SET fechaasignacarrier=? WHERE id=?',[fechaasignacarrier,id],
+    db.query('UPDATE pedidos SET precio=?,fees=?,deposito=?,storage=?,preciofinal=?,fechafinal=? WHERE id=?',[precio,fees,deposito,storage,preciofinal,fechafinal,id],
         (err,result)=>{
             if(err){
                 console.log(err);
@@ -304,6 +474,40 @@ app.put("/asigna", (req,res)=>{
              }
         }
     );
+});
+
+app.put("/cierrepedido", async (req,res)=>{
+       
+    const pagadocarrier = req.body.pagadocarrier;
+               
+    db.query('UPDATE pedidos SET pagadocarrier=? WHERE id=?',[pagadocarrier,val.id],
+        (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
+
+app.put("/asigna", async (req,res)=>{
+    //const id = req.body.id;
+    const fechaasignacarrier = req.body.fechaasignacarrier;
+    const nombrecarrier = req.body.nombrecarrier;
+    const subastaList = req.body.subastaList;
+
+    try {
+            subastaList.forEach((val) => {
+                db.query('UPDATE pedidos SET fechaasignacarrier=?,nombrecarrier=?,pagocarrier=? WHERE id=?',[fechaasignacarrier,nombrecarrier,val.pagocarrier,val.id]);
+            })
+        res.send({message: 'Success'})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            error: error
+        })
+    }
 });
 
 
@@ -384,6 +588,22 @@ app.put("/transportistas", (req,res)=>{
     );
 });
 
+
+app.delete("/pedidosabc/:id", (req,res)=>{
+    const id = req.params.id;
+    
+    
+    
+    db.query('DELETE FROM pedidos WHERE id=?',id,
+        (err,result)=>{
+            if(err){
+                console.log(err);
+             } else {
+                res.send(result);
+             }
+        }
+    );
+});
 
 app.delete("/autos/:id", (req,res)=>{
     const id = req.params.id;
