@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    container_name: mysql_container
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: krriers
+      MYSQL_USER: rudy
+      MYSQL_PASSWORD: 123456
+    # volumes:
+    #   - ./data:/var/lib/mysql
+    ports:
+      - 3306:3306
