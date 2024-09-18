@@ -13,4 +13,5 @@ export const db = mysql.createPool({
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
   port: MYSQL_PORT,
+  ssl: { rejectUnauthorized: false },
 });
