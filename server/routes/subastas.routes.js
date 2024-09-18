@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { db } from "../libs/db";
+
 const router = Router();
 
 router.get("/subastas", (req, res) => {

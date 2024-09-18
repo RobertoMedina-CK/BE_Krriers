@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { db } from "../libs/db.js";
+
 const router = Router();
 
 router.get("/caja", (req, res) => {
