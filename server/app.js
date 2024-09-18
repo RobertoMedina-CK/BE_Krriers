@@ -8,7 +8,7 @@ import files from "./routes/files.routes.js";
 import transportistas from "./routes/transportistas.routes.js";
 import pedidos from "./routes/pedidos.routes.js";
 import subastas from "./routes/subastas.routes.js";
-import autos from "./routes/subastas.routes.js";
+import autos from "./routes/autos.routes.js";
 import clientes from "./routes/clientes.routes.js";
 import caja from "./routes/caja.routes.js";
 import cajeros from "./routes/cajeros.routes.js";
